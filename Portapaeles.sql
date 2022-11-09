@@ -1,17 +1,75 @@
+
+DROP TABLE IF EXISTS weapons_materials;
+DROP TABLE IF EXISTS armours_materials;
+
+DROP TABLE IF EXISTS materials;
+
+DROP TABLE IF EXISTS characters_weapons;
+DROP TABLE IF EXISTS characters_items;
+DROP TABLE IF EXISTS characters_armours;
+
+DROP TABLE IF EXISTS armours;
 DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS weapons;
+
 DROP TABLE IF EXISTS items_types;
 DROP TABLE IF EXISTS armours_types;
 DROP TABLE IF EXISTS weapons_types;
-DROP TABLE IF EXISTS weapons;
-DROP TABLE IF EXISTS armour;
-DROP TABLE IF EXISTS character_weapons;
-DROP TABLE IF EXISTS weapons_materials;
-DROP TABLE IF EXISTS armours_materials;
- CREATE TABLE items_types
+
+DROP TABLE IF EXISTS stats;
+
+DROP TABLE IF EXISTS characters;
+
+CREATE TABLE characters
 (
-id_items_type INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-type VARCHAR (24),
-description TEXT,
+    id_character INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(32),
+    age INT,
+    race VARCHAR(16),
+    gender CHAR(1),
+    class VARCHAR(16),
+    height FLOAT,
+    weight FLOAT,
+    country CHAR(3),
+    description TEXT
+);
+CREATE TABLE stats 
+(
+    id_stats INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    agility INT,
+    hp FLOAT,
+    hp_max INT,
+    xp FLOAT,
+    xp_max INT,
+    mp FLOAT,
+    mp_max INT,
+   	`level` INT,
+    physic_attack FLOAT,
+    magic_attack FLOAT,
+    physisc_defense FLOAT,
+    magic_defense FLOAT,
+    stamina INT,
+    mana INT,
+    intel INT,
+    stealth INT,
+    luck INT,
+    faith INT,
+    velocity INT,
+    dexterity INT,
+    strength INT,
+    charisma INT,
+    vigor INT,
+    tenacity INT,
+    critical_rate INT,
+    balance INT,
+    id_character INT UNSIGNED,
+    FOREIGN KEY(id_character)REFERENCES characters(id_character)
+);
+CREATE TABLE items_types
+(
+	id_items_type INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	type VARCHAR (24),
+	description TEXT,
     icon VARCHAR (16)
 );
 INSERT INTO items_types (type, description, icon)VALUES("Explosive","ace kambom","a.png");
@@ -78,7 +136,7 @@ CREATE TABLE weapons
 );
 INSERT INTO weapons (weapons, grip, durability, `range`, critical_rate, recoil, damage, `level`,cost, description,id_weapon_type) VALUES ("espada",2,100,3.0,10.0,0.0,30,10,100,"espada",1);
  
- CREATE TABLE armour
+ CREATE TABLE armours
  (
      id_armour INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
      armour CHAR(24),
@@ -92,9 +150,8 @@ INSERT INTO weapons (weapons, grip, durability, `range`, critical_rate, recoil, 
      id_armour_type INT UNSIGNED,
      FOREIGN KEY (id_armour_type) REFERENCES armours_types (id_armour_type)
  );
-INSERT INTO armour (armour,physical_defense,magical_defense, weight, durability,`level`, cost, description, id_armour_type) VALUES ("gorra", 10, 5, 100, 100, 5, 30, "gorra", 3);
-
-CREATE TABLE characte_weapons
+INSERT INTO armours (armour,physical_defense,magical_defense, weight, durability,`level`, cost, description, id_armour_type) VALUES ("gorra", 10, 5, 100, 100, 5, 30, "gorra", 3);
+CREATE TABLE characters_weapons
 (
     id_character_weapon INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_character INT UNSIGNED,
@@ -102,7 +159,39 @@ CREATE TABLE characte_weapons
     id_weapon INT UNSIGNED,
     FOREIGN KEY (id_weapon) REFERENCES weapons (id_weapon)
 );
-INSERT INTO character_weapon (id_character,id_weapon) VALUES (1,1),(4,3),(4,1);
+INSERT INTO characters_weapons (id_character,id_weapon) VALUES (1,1),(4,3),(4,1);
+
+CREATE TABLE characters_items
+(
+    id_characters_item INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_character INT UNSIGNED,
+    id_item INT UNSIGNED,
+    FOREIGN KEY (id_character)REFERENCES characters(id_character),
+    FOREIGN KEY (id_item)REFERENCES items(id_item)
+);
+
+CREATE TABLE materials 
+(
+	id_material INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	material CHAR (16),
+	color CHAR (6),
+	cost FLOAT
+);
+
+INSERT INTO materials (material,color,cost) VALUES ("Obsidiana","000000",40);
+INSERT INTO materials (material,color,cost) VALUES ("Carne","ffff00",10);
+INSERT INTO materials (material,color,cost) VALUES ("Pana","ffdddd",50);
+INSERT INTO materials (material,color,cost) VALUES ("Goma sagrada","ffffff",1000);
+INSERT INTO materials (material,color,cost) VALUES ("Piedra","cccccc",1);
+INSERT INTO materials (material,color,cost) VALUES ("Cuero","ddddaa",20);
+INSERT INTO materials (material,color,cost) VALUES ("Bandera España","ESPAÑA",2030);
+INSERT INTO materials (material,color,cost) VALUES ("Plumas de angel","ffffff",10000);
+INSERT INTO materials (material,color,cost) VALUES ("Materia oscura","000000",40);
+INSERT INTO materials (material,color,cost) VALUES ("Hueso","cccccc",10);
+
+
+
+
 
 CREATE TABLE weapons_materials 
 (
@@ -128,3 +217,4 @@ CREATE TABLE armours_materials
         FOREIGN KEY (id_material) REFERENCES materials (id_material)
 
 );
+
