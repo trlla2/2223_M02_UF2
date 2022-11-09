@@ -32,7 +32,16 @@ CREATE TABLE characters
     weight FLOAT,
     country CHAR(3),
     description TEXT
-);
+); 
+INSERT INTO characters (`name`, `age`, `race`, `gender`, `class`, `height`, `weight`, `country`, `description`)
+    VALUES
+( 'Payoh', 67, 'Cambiapieles', 'L', 'Dictador', 1.75, 80, 'RUM', 'Payoh es.... un cambiapieles muy raton.'),
+( 'Yuca ', 27, 'Sirenido', 'F', 'Cryptolai', 1, 40, 'PUR', 'Yuca esta en la academia de mundocrypto junto a Mani Thawani para luchar contra Tamayo.'),
+('Yulen', 104, 'No muerto', 'D', 'Minero', 0.8, 25, 'NDE', 'Yulen se fue para no volver, o eso cree la gente....'),
+('Josema', 3000, 'Deidad', 'T', 'Procrastinador', 3.14, 0, 'PER', 'Josema, es tal su grandeza que decidio vivir en latam.');
+
+
+
 CREATE TABLE stats 
 (
     id_stats INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -67,7 +76,7 @@ CREATE TABLE stats
 );
 CREATE TABLE items_types
 (
-	id_items_type INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	id_item_type INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	type VARCHAR (24),
 	description TEXT,
     icon VARCHAR (16)
@@ -75,8 +84,8 @@ CREATE TABLE items_types
 INSERT INTO items_types (type, description, icon)VALUES("Explosive","ace kambom","a.png");
 
 CREATE TABLE items(
-    id_items INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    items VARCHAR(24),
+    id_item INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    item VARCHAR(24),
     consumible BOOLEAN,
     cost FLOAT,
     `key` BOOLEAN,
@@ -89,13 +98,13 @@ CREATE TABLE items(
     durability INT(11),
     description TEXT,
     disassemble BOOLEAN,
-    id_items_type INT UNSIGNED,
-    FOREIGN KEY (id_items_type) REFERENCES items_types (id_items_type)
+    id_item_type INT UNSIGNED,
+    FOREIGN KEY (id_item_type) REFERENCES items_types (id_item_type)
 );
-INSERT INTO items (items, consumible, cost, `key`,
+INSERT INTO items (item, consumible, cost, `key`,
                    rarity, weight, `usage`, fusionable,
                    width, height, durability, description,
-                   disassemble, id_items_type)
+                   disassemble, id_item_type)
 VALUES ("Granada", true, 300, false,
         500, 100, 2000, false,
         10, 10, 100, "Kabom",
@@ -159,7 +168,7 @@ CREATE TABLE characters_weapons
     id_weapon INT UNSIGNED,
     FOREIGN KEY (id_weapon) REFERENCES weapons (id_weapon)
 );
-INSERT INTO characters_weapons (id_character,id_weapon) VALUES (1,1),(4,3),(4,1);
+INSERT INTO characters_weapons (id_character,id_weapon) VALUES (1,1),(4,1),(4,1);
 
 CREATE TABLE characters_items
 (
@@ -210,7 +219,7 @@ CREATE TABLE armours_materials
 	id_armour_material INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	id_armour INT UNSIGNED,
 
-        FOREIGN KEY (id_armour) REFERENCES armour (id_armour),
+        FOREIGN KEY (id_armour) REFERENCES armours (id_armour),
 
 	id_material INT UNSIGNED, 
 
