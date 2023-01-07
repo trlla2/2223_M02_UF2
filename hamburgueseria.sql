@@ -1,30 +1,30 @@
-DROP TABLE IF EXIST pedidos_hamburguesas;
-DROP TABLE IF EXIST ingredientes_hamburguesas;
-DROP TABLE IF EXIST pedidos;
-DROP TABLE IF EXIST hamburgesas;
-DROP TABLE IF EXIST ingredientes;
+DROP TABLE IF EXISTS pedidos_hamburguesas;
+DROP TABLE IF EXISTS ingredientes_hamburguesas;
+DROP TABLE IF EXISTS pedidos;
+DROP TABLE IF EXISTS hamburgesas;
+DROP TABLE IF EXISTS ingredientes;
 
 
 
 
 
 CREATE TABLE pedidos (id_pedido INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-		      fecha DATETIME
+		      fecha TIME
 );
 
-INSERT TALBLE pedidos (fecha) values 
-		 ("2023-01-07 12:24:30"),
-		 ("2023-01-07 12:25:10"),
-		 ("2023-01-07 12:27:30");
+INSERT INTO pedidos (fecha) values 
+		 ('12:24:30'),
+		 ('12:25:10'),
+		 ('12:27:30');
 
 CREATE TABLE ingredientes (id_ingrediente INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-			   name VARCHAR(24),
+			   name VARCHAR(24)
 );
 
-INSERT TALBE ingredientes (name) VALUES
+INSERT INTO ingredientes (name) VALUES
 		 ("hamburguesaTernera"),
 		 ("lechuga"),
-		 ("queso"),
+		 ("queso"), 
 		 ("bacon"),
 		 ("salsa barbacoa"),
 		 ("heura"),
@@ -33,14 +33,14 @@ INSERT TALBE ingredientes (name) VALUES
 CREATE TABLE hamburgesas (id_hamburgesa INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 			  name VARCHAR(24),
 			  cost FLOAT,
-			  vegana BOLEAN
+			  vegana BOOLEAN
 );
 
-INSERT INTO hamburesas ( name, cost, vegana) VALUES
-		 ("vegana", 6.50f, "TRUE"),
-		 ("cheseBurguer", 5.50f, "FALSE"),
-		 ("simple", 4.00f, "FALSE"),
-		 ("completa", 9.00f, "FALSE"); 
+INSERT INTO hamburgesas ( name, cost, vegana) VALUES
+		 ("vegana", 6.50, TRUE),
+		 ("cheseBurguer", 5.50, FALSE),
+		 ("simple", 4.00, FALSE),
+		 ("completa", 9.00, FALSE); 
 
 CREATE TABLE ingredientes_hamburguesas (id_ingrediente_hamburgesa INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, 
                                         id_ingrediente INT UNSIGNED, 
@@ -49,7 +49,7 @@ CREATE TABLE ingredientes_hamburguesas (id_ingrediente_hamburgesa INT UNSIGNED N
                                         FOREIGN KEY (id_hamburguesa) REFERENCES hamburgesas (id_hamburgesa)
 );
 
-INSERT TABLE ingredientes_hamburguesas (id_ingrediente, id_hamburguesa) VALUES
+INSERT INTO ingredientes_hamburguesas (id_ingrediente, id_hamburguesa) VALUES
 		 (6, 1), (2, 1), (7, 1),
 		 (1, 2), (3, 2), (7, 2),
 		 (1, 3), (7, 3),
@@ -61,7 +61,7 @@ CREATE TABLE pedidos_hamburguesas (id_pedido_hamburgesa INT UNSIGNED NOT NULL PR
                                         FOREIGN KEY (id_pedido) REFERENCES pedidos (id_pedido),
                                         FOREIGN KEY (id_hamburguesa) REFERENCES hamburgesas (id_hamburgesa)
 );
-INSERT TABLE (id_pedido, id_hamburguesa) VALUES 
+INSERT INTO pedidos_hamburguesas (id_pedido, id_hamburguesa) VALUES 
 		 (1, 1), (1, 3), (1, 4),
 		 (2, 2), (2, 3),
 		 (3, 4), (3, 3); 
